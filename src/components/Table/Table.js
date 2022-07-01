@@ -16,11 +16,13 @@ const Table = () => {
   const [calls, setCalls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [requestError, setRequestError] = useState();
+  const [filter, setFilter] = useState(calls);
   const fetchData = async () => {
     try {
       setLoading(true);
       const { results, total_rows } = (await authAxios.post()).data;
       setCalls(results);
+      setFilter(results);
     } catch (err) {
       setRequestError(err.message);
     } finally {
@@ -30,10 +32,13 @@ const Table = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  const filterCalls = (type) => {
+    const updateList = calls.filter((x) => x.in_out == type);
+    setFilter(updateList);
+  };
 
-  console.log(calls);
   return (
-    <div className="table_wrapper">
+    <form className="table_wrapper">
       {loading && <span className="loading">Loading...</span>}
       <div className="header">
         <div className="date">Среда, 13 окт</div>
@@ -106,10 +111,15 @@ const Table = () => {
               <div className="clear">Сбросить фильтры</div>
               <div className="clear_icon"></div>
             </div>
-            <select className="filter_select">
-              <option value="">Все типы</option>
-              <option value="1">Входящие</option>
-              <option value="2">Исходящие</option>
+            <select
+              className="filter_select"
+              onChange={(e) => {
+                filterCalls(e.target.value);
+              }}
+            >
+              <option value=" ">Все типы</option>
+              <option value=" 1 ">Входящие</option>
+              <option value=" 0 ">Исходящие</option>
             </select>
             <select className="filter_select">
               <option value="all-workers">Все сотрудники</option>
@@ -155,40 +165,28 @@ const Table = () => {
             <div className="top_duration">Длительность</div>
           </div>
         </div>
-        {calls.map((call, key) => {
-          let str = call.date;
-          let arr = str.split(' ');
-          let time = arr[1].split(':');
-          let time1 = time[0]+':'+time[1]
-          console.log(time1)
-          return (  
+        {filter.map((call) => {
+          let arr = call.date.split(" ");
+          let time = arr[1].split(":");
+          let time1 = time[0] + ":" + time[1];
+          return (
             <div className="list">
               <div className="row_element" key={call.id}>
-                <div className={`top_type${call.in_out}`}>
-                  {}
+                <div className={`top_type${call.in_out}`}>{}</div>
+                <div className="top_time_list">{time1}</div>
+                <div className="top_person_list">{}</div>
+                <div className="top_number_list">
+                  +{call.partner_data.phone}
                 </div>
-                <div className="top_time" >
-                  {time1}
-                </div>
-                <div className="top_person_list" >
-                  {}
-                </div>
-                <div className="top_number" >
-                  {call.partner_data.phone}
-                </div>
-                <div className="top_source" >
-                  {call.source}
-                </div>
-                <div className="top_rate" >
-                  {call.disconnect_reason}
-                </div>
+                <div className="top_source">{call.source}</div>
+                <div className="top_rate_list">{call.status}</div>
                 <div className="top_duration_list">{`${call.time} мин`}</div>
               </div>
             </div>
           );
         })}
       </div>
-    </div>
+    </form>
   );
 };
 

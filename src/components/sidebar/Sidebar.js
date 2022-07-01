@@ -78,15 +78,14 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="buttons">
-          <div className="btn">
-              <h4 className="add_btn">Добавить заказ</h4>
-              <div className="icon11"/>
-          </div>
-          <div className="btn">
-              <h4 className="pay_btn">Оплата</h4>
-              <div className="icon12"/>
-          </div>
-
+        <div className="btn">
+          <h4 className="add_btn">Добавить заказ</h4>
+          <div className="icon11" />
+        </div>
+        <div className="btn">
+          <h4 className="pay_btn">Оплата</h4>
+          <div className="icon12" />
+        </div>
       </div>
     </div>
   );

@@ -343,7 +343,7 @@
     background: url(./icons/user.svg) no-repeat left;
     margin-top: 12px;
     margin-right: 96px;
-    margin-left: 16px;
+    margin-left: 60px;
 }
 .row_element{
     margin-top: 21px;
@@ -354,7 +354,7 @@
 
 .top_type0{
     margin-right: 30px;
-    background: url(./icons/call_no.svg) no-repeat center;
+    background: url(./icons/call_income.svg) no-repeat center;
     height: 13px;
     width: 13px;
 
@@ -365,7 +365,18 @@
     height: 13px;
     width: 13px;
 }
+.top_time_list{
+    margin-left: 13px;
+}
 .top_duration_list{
     margin-left: 120px;
     width: 65px;
+}
+.top_number_list{
+    margin-right: 221px;
+    width: 200px;
+}
+.top_rate_list{
+    width: 200px;
+    margin-left: 30px;
 }
